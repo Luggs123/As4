@@ -1,3 +1,6 @@
+package pack_main;
+
+
 import javafx.animation.Interpolator;
 import javafx.animation.Transition;
 import javafx.geometry.Rectangle2D;
@@ -16,14 +19,26 @@ public class SpriteAnimation extends Transition {
 
 	private int lastIndex;
 
-	public SpriteAnimation(ImageView imageView, Duration duration, int count, int columns,
-			int offsetX, int offsetY,
-			int width,   int height) {
+	public SpriteAnimation(ImageView imageView, Duration duration, int count, int columns, int offsetX, int offsetY,
+			int width, int height) {
 		this.imageView = imageView;
-		this.count     = count;
-		this.columns   = columns;
-		this.offsetX   = offsetX;
-		this.offsetY   = offsetY;
+		this.count = count;
+		this.columns = columns;
+		this.offsetX = offsetX;
+		this.offsetY = offsetY;
+		this.width     = width;
+		this.height    = height;
+		setCycleDuration(duration);
+		setInterpolator(Interpolator.LINEAR);
+	}
+	
+	public SpriteAnimation(ImageView imageView, Duration duration, int count, int columns, int offsetX, int offsetY,
+			int width, int height, int initialX) {
+		this.imageView = imageView;
+		this.count = count;
+		this.columns = columns;
+		this.offsetX = offsetX;
+		this.offsetY = offsetY;
 		this.width     = width;
 		this.height    = height;
 		setCycleDuration(duration);
