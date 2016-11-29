@@ -3,8 +3,6 @@ package pack_main;
 import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
 import javafx.animation.ParallelTransition;
-import javafx.animation.PathTransition;
-import javafx.animation.PathTransitionBuilder;
 import javafx.animation.ScaleTransition;
 import javafx.animation.SequentialTransition;
 import javafx.application.Application;
@@ -22,6 +20,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import pack_pet.ClsPet;
 
+@SuppressWarnings("deprecation")
 public class SandboxFX extends Application implements pack_pet.InterfacePet {
 	
 	// Primary animation objects.
@@ -67,7 +66,6 @@ public class SandboxFX extends Application implements pack_pet.InterfacePet {
 		animSeqs.getChildren().addAll(dog.getPetAnim(), cat.getPetAnim(), mouse.getPetAnim(), houseAnimation);
 		
 		// Generate the path.
-		PathTransition pathTransition = new PathTransition();
 		Path path = PathBuilder.create()
 				.elements(
 						new MoveTo(450, 449),
