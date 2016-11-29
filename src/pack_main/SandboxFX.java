@@ -46,12 +46,13 @@ public class SandboxFX extends Application implements pack_pet.InterfacePet {
 		dog.getPetAnim().setAutoReverse(true);
 		dog.getPetImage().setTranslateX(40);
 		
-		ClsPet cat = new ClsPet("Cat", Duration.millis(1500), 40, 8, 0, 0, 410, 449);
+		ClsPet cat = new ClsPet("Cat", Duration.millis(800), 3, 3, 192, 2245, SRITE_WIDTH, SRITE_WIDTH);
 		cat.getPetAnim().setCycleCount(Animation.INDEFINITE);
 		cat.getPetImage().setTranslateX(550);
 		
-		ClsPet mouse = new ClsPet("Mouse", Duration.millis(1500), 40, 8, 0, 0, 410, 449);
+		ClsPet mouse = new ClsPet("Mouse", Duration.millis(700), 3, 3, 384, 2245, SRITE_WIDTH, SRITE_WIDTH);
 		mouse.getPetAnim().setCycleCount(Animation.INDEFINITE);
+		mouse.getPetAnim().setAutoReverse(true);
 		mouse.getPetImage().setTranslateX(550);
 		mouse.getPetImage().setTranslateY(300);
 
