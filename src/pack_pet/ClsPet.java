@@ -17,6 +17,11 @@ public class ClsPet implements InterfacePet {
 				offsetY, width, height);
 	}
 	
+	public ClsPet(String name, SpriteAnimation anim) {
+		this.name = name;
+		this.petAnim = anim;
+	}
+	
 	public SpriteAnimation getPetAnim() {
 		return petAnim;
 	}
