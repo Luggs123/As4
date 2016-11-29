@@ -24,14 +24,17 @@ public class SpriteAnimation extends Transition {
 	
 	public SpriteAnimation() {
 		imageView = new ImageView();
-		this.frameCount = 0;
-		this.frameColumns = 0;
+		this.frameCount = 1;
+		this.frameColumns = 1;
 		this.offsetX = 0;
 		this.offsetY = 0;
-		this.width     = 100;
-		this.height    = 100;
+		this.width     = 64;
+		this.height    = 64;
 		setCycleDuration(Duration.millis(1000));
 		setInterpolator(Interpolator.LINEAR);
+		
+		// Sets the default viewpoint.
+		this.imageView.setViewport(new Rectangle2D(offsetX, offsetY, width, height));
 	}
 	
 	public SpriteAnimation(ImageView imageView, Duration duration, int frameCount, int frameColumns, int offsetX, int offsetY,
@@ -45,6 +48,9 @@ public class SpriteAnimation extends Transition {
 		this.height    = height;
 		setCycleDuration(duration);
 		setInterpolator(Interpolator.LINEAR);
+		
+		// Sets the default viewpoint.
+		this.imageView.setViewport(new Rectangle2D(offsetX, offsetY, width, height));
 	}
 
 	@Override

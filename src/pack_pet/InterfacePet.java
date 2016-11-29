@@ -6,4 +6,6 @@ public interface InterfacePet {
 	final Image SPRITE_SHEET = new Image("spritesheet.png");
 	
 	final String EMP_STR = "";
+	
+	final int SRITE_WIDTH = 32;
 }

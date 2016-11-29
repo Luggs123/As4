@@ -20,7 +20,6 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import pack_pet.ClsPet;
 
-@SuppressWarnings("deprecation")
 public class SandboxFX extends Application implements pack_pet.InterfacePet {
 	
 	// Primary animation objects.
@@ -42,8 +41,9 @@ public class SandboxFX extends Application implements pack_pet.InterfacePet {
 		 * SPRITE ANIMATIONS
 		 */
 		// Initializing the pets and their animation objects.
-		ClsPet dog = new ClsPet("Dog", Duration.millis(1500), 40, 8, 0, 0, 410, 449);
+		ClsPet dog = new ClsPet("Dog", Duration.millis(1200), 3, 3, 0, 2245, SRITE_WIDTH, SRITE_WIDTH);
 		dog.getPetAnim().setCycleCount(Animation.INDEFINITE);
+		dog.getPetAnim().setAutoReverse(true);
 		dog.getPetImage().setTranslateX(40);
 		
 		ClsPet cat = new ClsPet("Cat", Duration.millis(1500), 40, 8, 0, 0, 410, 449);
