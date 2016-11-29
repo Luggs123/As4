@@ -22,6 +22,18 @@ public class SpriteAnimation extends Transition {
 	// Used to determine what the index of the last frame was.
 	private int lastIndex;
 	
+	public SpriteAnimation() {
+		imageView = new ImageView();
+		this.frameCount = 0;
+		this.frameColumns = 0;
+		this.offsetX = 0;
+		this.offsetY = 0;
+		this.width     = 100;
+		this.height    = 100;
+		setCycleDuration(Duration.millis(1000));
+		setInterpolator(Interpolator.LINEAR);
+	}
+	
 	public SpriteAnimation(ImageView imageView, Duration duration, int frameCount, int frameColumns, int offsetX, int offsetY,
 			int width, int height) {
 		this.imageView = imageView;
