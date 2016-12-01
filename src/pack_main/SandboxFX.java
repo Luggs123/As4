@@ -5,6 +5,7 @@ import javafx.animation.FadeTransition;
 import javafx.animation.ParallelTransition;
 import javafx.animation.ScaleTransition;
 import javafx.animation.SequentialTransition;
+import javafx.animation.TranslateTransition;
 import javafx.application.Application;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
@@ -210,8 +211,22 @@ public class SandboxFX extends Application implements pack_pet.InterfacePet {
 		
 		seq_2 = new SequentialTransition(arrow1, arrow2, arrow3);
 		seq_2.setCycleCount(1);
-		
-		mainSeq = new SequentialTransition(seq_1, seq_2/*, seq_3, seq_4, seq_5*/);
+                
+                /**************
+		 * SEQUENCE 3 *
+		 **************/
+                TranslateTransition dogTranslate = new TranslateTransition(Duration.millis(5000),dog.getPetImage());
+                dogTranslate.setToX(600);
+                
+                TranslateTransition catTranslate = new TranslateTransition(Duration.millis(5000),cat.getPetImage());
+                catTranslate.setToY(400);
+                
+                TranslateTransition mouseTranslate = new TranslateTransition(Duration.millis(5000),mouse.getPetImage());
+                mouseTranslate.setToX(-600);
+                        
+                seq_3 = new ParallelTransition(dogTranslate,catTranslate,mouseTranslate);
+                
+		mainSeq = new SequentialTransition(seq_1, seq_2, seq_3/*, seq_4, seq_5*/);
 		
 		// Add the panes to the main window.
 		mainAnimation.getChildren().addAll(path, dog.getPetImage(), cat.getPetImage(), mouse.getPetImage(), houseImageView, arrow1a, arrow2a, arrow3a, arrow1b, arrow2b, arrow3b, arrow1c, arrow2c, arrow3c);
