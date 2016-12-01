@@ -33,7 +33,7 @@ public class SandboxFX extends Application implements pack_pet.InterfacePet {
 	final static SpriteAnimation houseAnimation = new SpriteAnimation(houseImageView, Duration.millis(1200), 40, 8, 0, 0, 410, 449);
 
 	public void start(Stage primaryStage) {
-		primaryStage.setTitle("The Horse in Motion");
+		primaryStage.setTitle("Assignment 4");
 		VBox mainPane = new VBox();
 		HBox menuButtons = new HBox(15);
 		Pane mainAnimation = new Pane();
