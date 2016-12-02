@@ -165,7 +165,7 @@ public class SandboxFX extends Application implements pack_pet.InterfacePet {
 			arrowFade.setFromValue(0);
 			arrowFade.setToValue(1);
 			
-			// Every arrow's fade animation is added in a way so that the first arrow in each second fades in in parallel.
+			// The first arrow in each section will fade in parallel, followed by the second and third arrows.
 			arrowsFade[i % 3].getChildren().add(arrowFade);
 		
 			// Determine the coordinates of each arrow.
@@ -179,6 +179,7 @@ public class SandboxFX extends Application implements pack_pet.InterfacePet {
 			case 5: {
 				x = 720;
 				y = 100 + ((i - 3) * 100);
+				arrows[i].setRotate(90);
 			} break;
 			
 			// Third set of arrows.
@@ -187,14 +188,13 @@ public class SandboxFX extends Application implements pack_pet.InterfacePet {
 			case 8: { 
 				x = 600 - ((i - 6) * 110);
 				y = 460;
-				arrows[i].setRotate(90);
+				arrows[i].setRotate(180);
 			} break;
 			
 			// First set of arrows.
 			default: {
 				x = 340 + (i * 110);
 				y = 60;
-				arrows[i].setRotate(180);
 			}
 			}
 			
