@@ -9,10 +9,14 @@ import javafx.animation.ScaleTransition;
 import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
 import javafx.application.Application;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -21,6 +25,8 @@ import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.scene.shape.PathBuilder;
+import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import pack_pet.ClsPet;
@@ -35,6 +41,10 @@ public class ClsMain extends Application implements pack_pet.InterfacePet {
 	// House's ImageView and SpriteAnimation are defined here since it won't be a ClsPet object.
 	final static ImageView houseImageView = new ImageView(SPRITE_SHEET);
 	final static SpriteAnimation houseAnimation = new SpriteAnimation(houseImageView, Duration.millis(1200), 40, 8, 0, 0, 410, 449);
+	
+	// Menu buttons.
+	protected static Button btnStartReplay = null;
+	protected static Button btnExit = null;
 
 	public void start(Stage primaryStage) {
 		
@@ -50,6 +60,7 @@ public class ClsMain extends Application implements pack_pet.InterfacePet {
 		ClsPet dog = new ClsPet("Dog", Duration.millis(600), 3, 3, 0, 2245, SRITE_WIDTH, SRITE_WIDTH);
 		dog.getPetAnim().setCycleCount(Animation.INDEFINITE);
 		dog.getPetAnim().setAutoReverse(true);
+		// Image positions are relative to the top left, so subtract by half the image's width to center it.
 		dog.getPetImage().setX(200 - 16);
 		dog.getPetImage().setY(40 - 16);
 		dog.getPetImage().setOpacity(0);
@@ -261,35 +272,63 @@ public class ClsMain extends Application implements pack_pet.InterfacePet {
 		 * SEQUENCE 5 *
 		 **************/
 		// Display the ending label.
-		Label lblNotice = new Label("WOW CRINGE");
-		lblNotice.setOpacity(0);
+		Label lblEnd = new Label("Thanks for watching!" + NEWLINE
+				+ "No animals or houses were harmed in the making of this!");
+		lblEnd.setOpacity(0);
+		lblEnd.setTextAlignment(TextAlignment.CENTER);
 		
-		FadeTransition lblFade = new FadeTransition(Duration.millis(1000), lblNotice);
-		lblFade.setCycleCount(1);
-		lblFade.setFromValue(0);
-		lblFade.setToValue(1);
+		Label lblNotice = new Label("The works and images used in this program are licensed" + NEWLINE
+				+ "under the Creative Commons Attribution-ShareAlike 3.0 License.");
+		lblNotice.setOpacity(0);
+		lblNotice.setTextAlignment(TextAlignment.CENTER);
+		lblNotice.setFont(Font.font("Courier New", 10));
+		lblNotice.setTranslateX(320);
+		lblNotice.setTranslateY(330);
+		
+		FadeTransition lblEndFade = new FadeTransition(Duration.millis(3000), lblEnd);
+		lblEndFade.setCycleCount(1);
+		lblEndFade.setFromValue(0);
+		lblEndFade.setToValue(1);
+		
+		FadeTransition lblNoticeFade = new FadeTransition(Duration.millis(5000), lblNotice);
+		lblNoticeFade.setCycleCount(1);
+		lblNoticeFade.setFromValue(0);
+		lblNoticeFade.setToValue(1);
 		
 		Path seq_5Path = PathBuilder.create()
 				.elements(
 						new MoveTo(500, 40),
 						new ArcTo(350, 250, 0, 750, 200, true, true),
 						new ArcTo(100, 150, 0, 250, 200, true, false),
-						new ArcTo(100, 100, 0, 500, 400, true, false))
+						new ArcTo(100, 100, 0, 500, 300, true, true))
 						.build();
 		
 		PathTransition labelAnim = PathTransitionBuilder.create()
 				.duration(Duration.millis(2000))
 				.path(seq_5Path)
-				.node(lblNotice)
+				.node(lblEnd)
 				.build();
+
+		seq_5 = new ParallelTransition(lblEndFade, lblNoticeFade, labelAnim);
 		
-		seq_5 = new ParallelTransition(lblFade, labelAnim);
+		// Menu buttons.
+		btnStartReplay = new Button("Start");
+		btnStartReplay.setPrefWidth(BTN_WIDTH);
+		btnStartReplay.addEventHandler(MouseEvent.MOUSE_CLICKED, new ClsHandlers());
+		
+		btnExit = new Button("Exit");
+		btnExit.setPrefWidth(BTN_WIDTH);
+		btnExit.addEventHandler(MouseEvent.MOUSE_CLICKED, new ClsHandlers());
+		
+		menuButtons.getChildren().addAll(btnStartReplay, btnExit);
+		menuButtons.setPadding(new Insets(0, 0, 40, 0));
+		menuButtons.setAlignment(Pos.CENTER);
 		
 		// Add all the sequences to the main animation sequence.
 		mainSeq = new SequentialTransition(seq_1, seq_2, seq_3, seq_4, seq_5);
 		
 		// Add the panes to the main window.
-		mainAnimation.getChildren().addAll(mainPath, dog.getPetImage(), cat.getPetImage(), mouse.getPetImage(), houseImageView, lblNotice);
+		mainAnimation.getChildren().addAll(mainPath, dog.getPetImage(), cat.getPetImage(), mouse.getPetImage(), houseImageView, lblEnd, lblNotice);
 		for (int i = 0; i < 9; i++) {
 			mainAnimation.getChildren().add(arrows[i]);
 		}
@@ -299,7 +338,6 @@ public class ClsMain extends Application implements pack_pet.InterfacePet {
 
 		primaryStage.setScene(scene);
 		primaryStage.show();
-		play();
 	}
 	
 	public static void main(String[] args) {
