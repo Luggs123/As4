@@ -259,6 +259,7 @@ public class ClsMain extends Application implements pack_pet.InterfacePet {
 		houseFadeOut.setCycleCount(1);
 		houseFadeOut.setFromValue(1);
 		houseFadeOut.setToValue(0);
+		houseFadeOut.setDelay(Duration.millis(2500));
 		
 		seq_4 = new ParallelTransition(dogFadeOut, catFadeOut, mouseFadeOut, houseFadeOut);
 		
@@ -338,6 +339,7 @@ public class ClsMain extends Application implements pack_pet.InterfacePet {
 		
 		final AudioClip MUS = new AudioClip(resourceLoader("music.wav"));
 		MUS.setCycleCount(Animation.INDEFINITE);
+		MUS.setVolume(0.125);
 		MUS.play();
 		
 		mainPane.getChildren().addAll(mainAnimation, menuButtons);

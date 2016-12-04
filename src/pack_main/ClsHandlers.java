@@ -10,8 +10,8 @@ public class ClsHandlers implements EventHandler<Event> {
 	@Override
 	public void handle(Event event) {
 		Object source = event.getSource();
-		/*** ClsMain ***/
-		if (source == ClsMain.btnStartReplay) { // Open friends display.
+		
+		if (source == ClsMain.btnStartReplay) {
 			ClsMain.play();
 			ClsMain.btnStartReplay.setDisable(true);
 		} else {
