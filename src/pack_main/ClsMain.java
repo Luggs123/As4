@@ -1,5 +1,7 @@
 package pack_main;
 
+import java.io.File;
+
 import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
 import javafx.animation.ParallelTransition;
@@ -20,6 +22,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.AudioClip;
 import javafx.scene.shape.ArcTo;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
@@ -43,8 +46,8 @@ public class ClsMain extends Application implements pack_pet.InterfacePet {
 	final static SpriteAnimation houseAnimation = new SpriteAnimation(houseImageView, Duration.millis(1200), 40, 8, 0, 0, 410, 449);
 	
 	// Menu buttons.
-	protected static Button btnStartReplay = null;
-	protected static Button btnExit = null;
+	protected static Button btnStartReplay = new Button("Start");
+	protected static Button btnExit = new Button("Exit");
 
 	public void start(Stage primaryStage) {
 		
@@ -161,14 +164,14 @@ public class ClsMain extends Application implements pack_pet.InterfacePet {
 		
 		// Add the respective pet sequences to sequence 1.
 		seq_1 = new SequentialTransition(dog_seq, cat_seq, mouse_seq, house_seq);
-		seq_1.setCycleCount(1);
 		
 		/**************
 		 * SEQUENCE 2 *
 		 **************/
 		// Create the arrows and their fading animations.
 		ImageView arrows[] = new ImageView[9];
-		ParallelTransition arrowsFade[] = new ParallelTransition[]{ new ParallelTransition(), new ParallelTransition(), new ParallelTransition() };
+		ParallelTransition arrowsFade[] = new ParallelTransition[]{ new ParallelTransition(),
+				new ParallelTransition(), new ParallelTransition() };
 		
 		for (int i = 0; i < arrows.length; i++) {
 			arrows[i] = new ImageView(SPRITE_SHEET);
@@ -218,7 +221,6 @@ public class ClsMain extends Application implements pack_pet.InterfacePet {
 		}
 		
 		seq_2 = new SequentialTransition(arrowsFade[0], arrowsFade[1], arrowsFade[2]);
-		seq_2.setCycleCount(1);
                 
 		/**************
 		 * SEQUENCE 3 *
@@ -312,7 +314,6 @@ public class ClsMain extends Application implements pack_pet.InterfacePet {
 		seq_5 = new ParallelTransition(lblEndFade, lblNoticeFade, labelAnim);
 		
 		// Menu buttons.
-		btnStartReplay = new Button("Start");
 		btnStartReplay.setPrefWidth(BTN_WIDTH);
 		btnStartReplay.addEventHandler(MouseEvent.MOUSE_CLICKED, new ClsHandlers());
 		
@@ -326,12 +327,19 @@ public class ClsMain extends Application implements pack_pet.InterfacePet {
 		
 		// Add all the sequences to the main animation sequence.
 		mainSeq = new SequentialTransition(seq_1, seq_2, seq_3, seq_4, seq_5);
+		mainSeq.setOnFinished(new ClsActionHandlers());
 		
 		// Add the panes to the main window.
-		mainAnimation.getChildren().addAll(mainPath, dog.getPetImage(), cat.getPetImage(), mouse.getPetImage(), houseImageView, lblEnd, lblNotice);
+		mainAnimation.getChildren().addAll(mainPath, dog.getPetImage(), cat.getPetImage(), mouse.getPetImage(), houseImageView,
+				lblEnd, lblNotice);
 		for (int i = 0; i < 9; i++) {
 			mainAnimation.getChildren().add(arrows[i]);
 		}
+		
+		final AudioClip MUS = new AudioClip(resourceLoader("music.wav"));
+		MUS.setCycleCount(Animation.INDEFINITE);
+		MUS.play();
+		
 		mainPane.getChildren().addAll(mainAnimation, menuButtons);
 
 		Scene scene = new Scene(mainPane, 1000, 800);
@@ -346,6 +354,11 @@ public class ClsMain extends Application implements pack_pet.InterfacePet {
 	
 	public static void play() {
 		animSeqs.play();
-		mainSeq.play();
+		mainSeq.playFromStart();
+	}
+	
+	// Returns a file from ../ProjectDirectory/Resources/
+	public static String resourceLoader(String filename) {
+		return new File("Resources/" + filename).toURI().toString();
 	}
 }
