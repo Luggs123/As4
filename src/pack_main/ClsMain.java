@@ -45,6 +45,9 @@ public class ClsMain extends Application implements pack_pet.InterfacePet {
 	final static ImageView houseImageView = new ImageView(SPRITE_SHEET);
 	final static SpriteAnimation houseAnimation = new SpriteAnimation(houseImageView, Duration.millis(1200), 40, 8, 0, 0, 410, 449);
 	
+	// Arrow images.
+	protected static ImageView arrows[] = new ImageView[9];
+	
 	// Menu buttons.
 	protected static Button btnStartReplay = new Button("Start");
 	protected static Button btnExit = new Button("Exit");
@@ -87,7 +90,7 @@ public class ClsMain extends Application implements pack_pet.InterfacePet {
 		houseAnimation.setCycleCount(Animation.INDEFINITE);
 		houseImageView.setX(200 - 205);
 		houseImageView.setY(450 - 224.5);
-		houseImageView.setOpacity(0);
+		houseImageView.setOpacity(0);   
 		
 		animSeqs = new ParallelTransition(dog.getPetAnim(), cat.getPetAnim(), mouse.getPetAnim(), houseAnimation);
 		
@@ -169,17 +172,15 @@ public class ClsMain extends Application implements pack_pet.InterfacePet {
 		 * SEQUENCE 2 *
 		 **************/
 		// Create the arrows and their fading animations.
-		ImageView arrows[] = new ImageView[9];
 		ParallelTransition arrowsFade[] = new ParallelTransition[]{ new ParallelTransition(),
 				new ParallelTransition(), new ParallelTransition() };
-		
+
 		for (int i = 0; i < arrows.length; i++) {
 			arrows[i] = new ImageView(SPRITE_SHEET);
 			arrows[i].setViewport(new Rectangle2D(322, 2262, 80, 61));
 			arrows[i].setOpacity(0);
-			
+
 			FadeTransition arrowFade = new FadeTransition(Duration.millis(2000), arrows[i]);
-			arrowFade.setCycleCount(1);
 			arrowFade.setFromValue(0);
 			arrowFade.setToValue(1);
 			
@@ -357,6 +358,9 @@ public class ClsMain extends Application implements pack_pet.InterfacePet {
 	public static void play() {
 		animSeqs.play();
 		mainSeq.playFromStart();
+		for (int i = 0; i < 9; i++) {
+			arrows[i].setOpacity(0);
+		}
 	}
 	
 	// Returns a file from ../ProjectDirectory/Resources/
